@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT vs. Claude — Feature Comparison Matrix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #f4f8f5;
+            --bg-card: #ffffff;
+            --bg-accent: #e8f3ec;
+            --border-color: #d1e4d8;
+            --border-hover: #a3d1b2;
+            
+            --primary-dark: #1b4332;
+            --primary-mid: #2d6a4f;
+            --primary-leaf: #40916c;
+            --primary-light: #52b788;
+            --primary-soft: #74c69d;
+            --mint-bg: #e8f5e9;
+            --sage-subtle: #f0f7f2;
+            
+            --text-main: #112a1f;
+            --text-muted: #4a6356;
+            --text-light: #6c8979;
+            
+            --chatgpt-green: #2d6a4f;
+            --claude-accent: #3a5a40;
+            
+            --shadow-sm: 0 2px 8px rgba(27, 67, 50, 0.04);
+            --shadow-md: 0 6px 20px rgba(27, 67, 50, 0.07);
+            --shadow-lg: 0 12px 32px rgba(27, 67, 50, 0.1);
+            
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(82, 183, 136, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(45, 106, 79, 0.06) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Leaf Pattern Header */
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #edf6f0 100%);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "🌿";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.08;
+            transform: rotate(25deg);
+        }
+
+        header::after {
+            content: "🍃";
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            font-size: 7rem;
+            opacity: 0.08;
+            transform: rotate(-15deg);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-accent);
+            color: var(--primary-dark);
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-hover);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.02em;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* Control Panel / Search Bar */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: var(--bg-card);
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+            background: var(--sage-subtle);
+            color: var(--text-main);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-leaf);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--sage-subtle);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-dark);
+            color: #ffffff;
+            border-color: var(--primary-dark);
+        }
+
+        /* Comparison Table Container */
+        .table-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background: linear-gradient(180deg, #1b4332 0%, #2d6a4f 100%);
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 1.25rem 1.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        th.feature-header {
+            width: 26%;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        th.model-header {
+            width: 37%;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .header-icon {
+            font-size: 1.4rem;
+        }
+
+        /* Section Dividers inside table */
+        .category-row td {
+            background: var(--bg-accent);
+            color: var(--primary-dark);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.9rem 1.5rem;
+            border-top: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        /* Data Rows */
+        tbody tr.feature-row {
+            transition: background 0.15s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr.feature-row:hover {
+            background: rgba(232, 245, 233, 0.4);
+        }
+
+        td {
+            padding: 1.1rem 1.5rem;
+            vertical-align: top;
+            font-size: 0.92rem;
+        }
+
+        td.feature-name {
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: var(--sage-subtle);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .feature-desc {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.3;
+        }
+
+        td.gpt-cell {
+            border-right: 1px solid var(--border-color);
+        }
+
+        /* Feature Bullet Points & Tags */
+        ul.feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        ul.feature-list li {
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        ul.feature-list li::before {
+            content: "🌱";
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.75rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.2rem 0.55rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.4rem;
+        }
+
+        .tag-green {
+            background: #d8f3dc;
+            color: #1b4332;
+        }
+
+        .tag-leaf {
+            background: #e8f5e9;
+            color: #2d6a4f;
+            border: 1px solid #b7e4c7;
+        }
+
+        .tag-warning {
+            background: #fefae0;
+            color: #606c38;
+            border: 1px solid #dda15e;
+        }
+
+        /* Highlight winner callout */
+        .edge-highlight {
+            font-weight: 600;
+            color: var(--primary-leaf);
+            background: #f0fdf4;
+            border-left: 3px solid var(--primary-light);
+            padding: 0.4rem 0.6rem;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin-top: 0.5rem;
+            font-size: 0.82rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .table-card {
+                overflow-x: auto;
+            }
+            
+            table {
+                min-width: 800px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 0.88rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <header>
+            <div class="badge">🌿 Comprehensive AI Comparison • Updated 2026</div>
+            <h1>ChatGPT vs. Claude</h1>
+            <p class="subtitle">An in-depth, side-by-side feature analysis covering side panel navigation, privacy modes, collaborative workspaces, live visual environments, and system limits.</p>
+        </header>
+
+        <!-- Controls / Filter -->
+        <div class="controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search features (e.g., incognito, canvas, mcp, context)..." onkeyup="filterTable()">
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterCategory('all', this)">All Features</button>
+                <button class="filter-btn" onclick="filterCategory('side-panel', this)">Side Panels</button>
+                <button class="filter-btn" onclick="filterCategory('privacy', this)">Privacy & Temporary</button>
+                <button class="filter-btn" onclick="filterCategory('workspace', this)">Workspaces & Cowork</button>
+                <button class="filter-btn" onclick="filterCategory('artifacts', this)">Canvas vs Artifacts</button>
+            </div>
+        </div>
+
+        <!-- Matrix Table -->
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="feature-header">
+                            <div class="header-title">
+                                <span>🌿 Feature Domain</span>
+                            </div>
+                        </th>
+                        <th class="model-header">
+                            <div class="header-title">
+                                <span class="header-icon">🟢</span>
+                                <span>ChatGPT (OpenAI)</span>
+                            </div>
+                        </th>
+                        <th class="model-header">
+                            <div class="header-title">
+                                <span class="header-icon">🍃</span>
+                                <span>Claude (Anthropic)</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="comparisonBody">
+
+                    <!-- SECTION 1 -->
+                    <tr class="category-row" data-cat="side-panel">
+                        <td colspan="3">1. Side Panel Architecture & Navigation Layout</td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="side-panel">
+                        <td class="feature-name">
+                            Left Sidebar Navigation
+                            <span class="feature-desc">Main control hub for session management</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li>Houses custom GPT pinned shortcuts, recent chat history, and account settings.</li>
+                                <li>Includes search bar across past conversations.</li>
+                                <li>Fast model switching drawer directly at top of main view.</li>
+                            </ul>
+                            <span class="tag tag-leaf">GPT Store Integrated</span>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li>Minimalist collapsible navigation bar with recent conversations.</li>
+                                <li>Direct access to "Projects" container drawer.</li>
+                                <li>Clean profile switcher and theme toggles at bottom.</li>
+                            </ul>
+                            <span class="tag tag-leaf">Project Focused</span>
+                        </td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="side-panel">
+                        <td class="feature-name">
+                            Right Panel Drawer
+                            <span class="feature-desc">Interactive execution panel</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li><strong>Canvas Panel:</strong> Opens dynamically on the right for long-form document writing & code editing.</li>
+                                <li>Allows line-by-line inline edit requests and comment loops.</li>
+                            </ul>
+                            <div class="edge-highlight">Edge: Python sandbox back-end runner inside Canvas.</div>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li><strong>Artifacts Panel:</strong> Dedicated side drawer rendering real-time UI code, SVGs, documents, and diagrams.</li>
+                                <li>Interactive side-by-side view without taking over main chat stream.</li>
+                            </ul>
+                            <div class="edge-highlight">Edge: Instant visual React/HTML component previews.</div>
+                        </td>
+                    </tr>
+
+                    <!-- SECTION 2 -->
+                    <tr class="category-row" data-cat="privacy">
+                        <td colspan="3">2. Privacy, Incognito & Temporary Chat Modes</td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="privacy">
+                        <td class="feature-name">
+                            Temporary / Incognito Chat
+                            <span class="feature-desc">Ephemeral conversation tracking</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li><strong>Temporary Chat Toggle:</strong> Accessible in top model selector.</li>
+                                <li>Does not save to chat history or train models.</li>
+                                <li>Disables ChatGPT Memory for that session.</li>
+                                <li>Kept for up to 30 days for safety review before deletion.</li>
+                            </ul>
+                            <span class="tag tag-green">30-Day Safety Cache</span>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li><strong>Incognito / Training Controls:</strong> Opt-out toggle in Privacy Settings to stop data training.</li>
+                                <li>Team & Enterprise tiers have zero data retention/training by default.</li>
+                                <li>No single-click temporary toggle like ChatGPT, but project isolation is supported.</li>
+                            </ul>
+                            <span class="tag tag-warning">Setting-based Control</span>
+                        </td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="privacy">
+                        <td class="feature-name">
+                            Memory & Context Persistence
+                            <span class="feature-desc">Long-term personal information recall</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li><strong>Cross-Session Memory:</strong> Automatic extraction and storage of preferences across all conversations.</li>
+                                <li>Dedicated Memory Management menu to inspect or erase specific facts.</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li><strong>Project Knowledge base:</strong> Retains context specifically bound within individual Projects rather than global personal memory.</li>
+                                <li>Ensures strict compartmentalization of project facts.</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    <!-- SECTION 3 -->
+                    <tr class="category-row" data-cat="workspace">
+                        <td colspan="3">3. Workspaces & Collaborative "Cowork" Features</td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="workspace">
+                        <td class="feature-name">
+                            Shared Workspace / Team Plans
+                            <span class="feature-desc">Multi-user collaboration environments</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li><strong>ChatGPT Team & Enterprise:</strong> Shared custom GPTs across organization.</li>
+                                <li>Admin console, consolidated billing, and domain verification.</li>
+                                <li>Workspace chat sharing links with internal permissions.</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li><strong>Claude Team Workspace:</strong> Shared Project knowledge bases.</li>
+                                <li>Members can view and collaborate within common Projects and Artifacts.</li>
+                                <li>Role-based workspace administration with higher usage limits.</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="workspace">
+                        <td class="feature-name">
+                            Coworking & Project Hubs
+                            <span class="feature-desc">Resource sharing & custom instruction containers</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li>Custom GPT Builder allows creating specialized bots with private uploaded file knowledge.</li>
+                                <li>Lacks centralized project folders; relies on individual GPT instances.</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li><strong>Claude Projects:</strong> True collaborative workspace folders.</li>
+                                <li>Upload custom documentation, define project-wide instructions, and share whole conversations with team.</li>
+                            </ul>
+                            <div class="edge-highlight">Edge: Better organized project-level file management.</div>
+                        </td>
+                    </tr>
+
+                    <!-- SECTION 4 -->
+                    <tr class="category-row" data-cat="artifacts">
+                        <td colspan="3">4. Canvas vs. Artifacts & Code Execution</td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="artifacts">
+                        <td class="feature-name">
+                            Interactive Editing Engine
+                            <span class="feature-desc">Live text & code workspace</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li><strong>ChatGPT Canvas:</strong> Text/code document editor.</li>
+                                <li>Targeted edit tool (highlight text to re-prompt).</li>
+                                <li>Reading level slider and inline bug fixer controls.</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li><strong>Claude Artifacts:</strong> Generates self-contained interactive UI blocks, documents, and scripts.</li>
+                                <li>Live rendering of React components, SVGs, HTML pages, and Mermaid diagrams.</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    <tr class="feature-row" data-cat="artifacts">
+                        <td class="feature-name">
+                            Code Sandbox Execution
+                            <span class="feature-desc">Running code in real time</span>
+                        </td>
+                        <td class="gpt-cell">
+                            <ul class="feature-list">
+                                <li><strong>Advanced Data Analysis:</strong> Live Python execution backend inside containerized sandbox.</li>
+                                <li>Generates download files (CSVs, charts, PDFs, zip files).</li>
+                            </ul>
+                            <div class="edge-highlight">Edge: Full backend data processing execution.</div>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li>Client-side frontend JavaScript rendering inside safe sandboxed iframe.</li>
+                                <li>No backend Python or server execution layer currently integrated.</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>🌿 Designed with a modern Botanical Green & White theme. Data cross-checked across platform releases.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function filterTable() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#comparisonBody tr.feature-row');
+            const categories = document.querySelectorAll('#comparisonBody tr.category-row');
+
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                if (text.includes(input)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Hide empty categories when filtering search
+            categories.forEach(cat => {
+                const catType = cat.getAttribute('data-cat');
+                const matchingRows = document.querySelectorAll(`#comparisonBody tr.feature-row[data-cat="${catType}"]`);
+                let visibleCount = 0;
+                matchingRows.forEach(r => {
+                    if (r.style.display !== 'none') visibleCount++;
+                });
+                cat.style.display = visibleCount > 0 ? '' : 'none';
+            });
+        }
+
+        function filterCategory(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const rows = document.querySelectorAll('#comparisonBody tr.feature-row');
+            const categories = document.querySelectorAll('#comparisonBody tr.category-row');
+
+            if (category === 'all') {
+                rows.forEach(r => r.style.display = '');
+                categories.forEach(c => c.style.display = '');
+                return;
+            }
+
+            categories.forEach(cat => {
+                if (cat.getAttribute('data-cat') === category) {
+                    cat.style.display = '';
+                } else {
+                    cat.style.display = 'none';
+                }
+            });
+
+            rows.forEach(row => {
+                if (row.getAttribute('data-cat') === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
